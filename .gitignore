@@ -58,3 +58,14 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+ZepetoMultiTest/Library/
+ZepetoMultiTest/.vsconfig
+ZepetoMultiTest/.vscode/
+ZepetoMultiTest/Logs/
+ZepetoMultiTest/node_modules/@vercel/ncc/dist/ncc/loaders/typescript/lib/lib.es2018.asyncgenerator.d.ts
+ZepetoMultiTest/node_modules/
+ZepetoMultiTest/Temp/
+ZepetoMultiTest/.idea/
+ZepetoMultiTest/package.json
+ZepetoMultiTest/package-lock.json
+ZepetoMultiTest/tsconfig.json
