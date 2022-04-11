@@ -1,0 +1,33 @@
+fileFormatVersion: 2
+guid: 66d91a7a50b593e42a34d7f77d35dab2
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nclass
+    PlayerController extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Init(sessionId,
+    room) {\r\n        this.sessionId = sessionId;\r\n        this.room = room;\r\n   
+    }\r\n    IsLocal() {\r\n        return this.room != null;\r\n    }\r\n    GetSetssionId()
+    {\r\n        return this.sessionId;\r\n    }\r\n    SetTarget(targetSessionId)
+    {\r\n        this.targetSessionId = targetSessionId;\r\n        var targetZepetoPlayer
+    = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(this.targetSessionId);\r\n       
+    this.targetGo = targetZepetoPlayer.character.gameObject;\r\n    }\r\n    LateUpdate()
+    {\r\n        if (this.targetGo) {\r\n            this.transform.LookAt(this.targetGo.transform);\r\n       
+    }\r\n    }\r\n}\r\nexports.default = PlayerController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiUGxheWVyQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIlBsYXllckNvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxpREFBcUQ7QUFHckQsNkVBQTREO0FBRTVELE1BQXFCLGdCQUFpQixTQUFRLHFDQUFxQjtJQVF4RCxJQUFJLENBQUMsU0FBaUIsRUFBRSxJQUFXO1FBQ3RDLElBQUksQ0FBQyxTQUFTLEdBQUcsU0FBUyxDQUFDO1FBQzNCLElBQUksQ0FBQyxJQUFJLEdBQUcsSUFBSSxDQUFDO0lBQ3JCLENBQUM7SUFFTSxPQUFPO1FBQ1YsT0FBTyxJQUFJLENBQUMsSUFBSSxJQUFJLElBQUksQ0FBQztJQUM3QixDQUFDO0lBRU0sYUFBYTtRQUVoQixPQUFPLElBQUksQ0FBQyxTQUFTLENBQUM7SUFDMUIsQ0FBQztJQUVNLFNBQVMsQ0FBQyxlQUF3QjtRQUNyQyxJQUFJLENBQUMsZUFBZSxHQUFHLGVBQWUsQ0FBQztRQUN2QyxJQUFJLGtCQUFrQixHQUFHLDJDQUFhLENBQUMsUUFBUSxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsZUFBZSxDQUFDLENBQUM7UUFDaEYsSUFBSSxDQUFDLFFBQVEsR0FBRyxrQkFBa0IsQ0FBQyxTQUFTLENBQUMsVUFBVSxDQUFDO0lBQzVELENBQUM7SUFFRCxVQUFVO1FBQ04sSUFBRyxJQUFJLENBQUMsUUFBUSxFQUFDO1lBQ2IsSUFBSSxDQUFDLFNBQVMsQ0FBQyxNQUFNLENBQUMsSUFBSSxDQUFDLFFBQVEsQ0FBQyxTQUFTLENBQUMsQ0FBQztTQUNsRDtJQUNMLENBQUM7Q0FFSjtBQWxDRCxtQ0FrQ0MifQ==","assetPath":"Assets/Scripts/PlayerController.ts","manifest":{"properties":[],"name":"PlayerController","description":""},"isCompiled":true}'
+  typescriptHash: 0604472a89278b263759534ab0c36e43
