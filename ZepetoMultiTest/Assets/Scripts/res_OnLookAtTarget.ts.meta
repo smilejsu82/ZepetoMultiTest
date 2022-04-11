@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 918f79a9a30ccc04b96e96b637a20562
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nclass res_OnLookAtTarget {\r\n}\r\nexports.default = res_OnLookAtTarget;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicmVzX09uTG9va0F0VGFyZ2V0LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsicmVzX09uTG9va0F0VGFyZ2V0LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBRUEsTUFBcUIsa0JBQWtCO0NBSXRDO0FBSkQscUNBSUMifQ==","assetPath":"Assets/Scripts/res_OnLookAtTarget.ts","manifest":{"properties":[{"assembly":"mscorlib","name":"sessionId","type":"System.String","isArray":false,"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"mscorlib","name":"fromId","type":"System.String","isArray":false,"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"mscorlib","name":"toId","type":"System.String","isArray":false,"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"res_OnLookAtTarget","description":""},"isCompiled":true}'
+  typescriptHash: b4c6a0b2a87d29eed3e1b0e008080d82

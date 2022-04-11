@@ -5,6 +5,7 @@ import {Player, State, Vector3} from 'ZEPETO.Multiplay.Schema'
 import {CharacterState, SpawnInfo, ZepetoPlayers, ZepetoPlayer} from 'ZEPETO.Character.Controller'
 import * as UnityEngine from "UnityEngine";
 import PlayerController from './PlayerController'
+import res_OnLookAtTarget from './res_OnLookAtTarget'
 
 export default class Starter extends ZepetoScriptBehaviour {
 
@@ -18,10 +19,12 @@ export default class Starter extends ZepetoScriptBehaviour {
         this.multiplay.RoomCreated += (room: Room) => {
             this.room = room;
             
-            this.room.AddMessageHandler('broadcast', (message)=>{
+            this.room.AddMessageHandler('onLookAtTarget', (message)=>{
 
-                var fromId : string = message.fromId;
-                var toId : string = message.toId;
+                var res = message as res_OnLookAtTarget;
+
+                var fromId : string = res.fromId;
+                var toId : string = res.toId;
 
                 console.log(fromId, toId);
 
@@ -47,7 +50,12 @@ export default class Starter extends ZepetoScriptBehaviour {
                 if (hasPlayer) {
                     const myPlayer = ZepetoPlayers.instance.GetPlayer(this.room.SessionId);
                     if (myPlayer.character.CurrentState != CharacterState.Idle)
+                    {
                         this.SendTransform(myPlayer.character.transform);
+
+                        //this.SendLookAt(fromId, toId);
+                    }
+                        
                 }
             }
         }
@@ -67,6 +75,14 @@ export default class Starter extends ZepetoScriptBehaviour {
                 var playerController = this.localZepetoPlayer.character.gameObject.AddComponent<PlayerController>();
                 playerController.Init(this.room.SessionId, this.room);
 
+                playerController.findTargetAction = (fromId, toId)=>{
+
+                    ZepetoPlayers.instance.GetPlayer(fromId).character.transform.LookAt(
+                        ZepetoPlayers.instance.GetPlayer(toId).character.transform
+                    );
+
+                };
+
                 this.localZepetoPlayer.character.OnChangedState.AddListener((cur, prev) => {
                     this.SendState(cur);
                 });
@@ -82,21 +98,16 @@ export default class Starter extends ZepetoScriptBehaviour {
                     var playerController = zepetoPlayer.character.gameObject.AddComponent<PlayerController>();
                     playerController.Init(sessionId, null);
 
+                    playerController.findTargetAction = (fromId, toId)=>{
+
+
+                        ZepetoPlayers.instance.GetPlayer(fromId).character.transform.LookAt(
+                            ZepetoPlayers.instance.GetPlayer(toId).character.transform
+                        );
+                    };
+
                     // [RoomState] player 인스턴스의 state가 갱신될 때마다 호출됩니다.
                     player.OnChange += (changeValues) => this.OnUpdatePlayer(sessionId, player);
-
-                    this.StartCoroutine(this.WaitForLoadLocalPlayer(()=>{
-
-
-                        var fromId = this.localZepetoPlayer.character.gameObject.GetComponent<PlayerController>().GetSetssionId();
-                        var toId = sessionId;
-
-                        console.log(`fromId: ${fromId} ---> toId: ${toId}`);
-
-                        this.SendLookAt(fromId, toId);
-
-
-                    }));
                 }
             });
         }

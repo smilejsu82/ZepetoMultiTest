@@ -19,4 +19,4 @@ ScriptedImporter:
   WrapperFilters: []
   wrapperOutputDirectory: Generated
   compiledResult: '{"source":"","assetPath":"Assets/Scripts/ClientStarter.ts","manifest":{"properties":[],"name":"","description":""},"isCompiled":false}'
-  typescriptHash: b2a1dfe37857ebd0835700005118d55f
+  typescriptHash: fd765e74b7565e42305b76628fc40a1e
