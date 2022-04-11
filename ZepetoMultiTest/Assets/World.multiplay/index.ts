@@ -33,6 +33,19 @@ export default class extends Sandbox {
             player.transform = transform;
         });
 
+        this.onMessage("onLookAtTarget", (client, message) => {
+            //const player = this.state.players.get(client.sessionId);
+            //player.state = message.state;
+            var res = {
+                sessionId : client.sessionId,
+                fromId : message.fromId,
+                toId : message.toId
+            };
+
+            this.broadcast('onLookAtTarget', res);
+            
+        });
+
         this.onMessage("onChangedState", (client, message) => {
             const player = this.state.players.get(client.sessionId);
             player.state = message.state;

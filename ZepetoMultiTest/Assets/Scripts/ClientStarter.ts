@@ -17,6 +17,17 @@ export default class Starter extends ZepetoScriptBehaviour {
 
         this.multiplay.RoomCreated += (room: Room) => {
             this.room = room;
+            
+            this.room.AddMessageHandler('broadcast', (message)=>{
+
+                var fromId : string = message.fromId;
+                var toId : string = message.toId;
+
+                console.log(fromId, toId);
+
+            });
+
+
         };
 
         this.multiplay.RoomJoined += (room: Room) => {
@@ -77,13 +88,12 @@ export default class Starter extends ZepetoScriptBehaviour {
                     this.StartCoroutine(this.WaitForLoadLocalPlayer(()=>{
 
 
-                        var localPlayerController = this.localZepetoPlayer.character.gameObject.GetComponent<PlayerController>();
-                        localPlayerController.SetTarget(sessionId);
+                        var fromId = this.localZepetoPlayer.character.gameObject.GetComponent<PlayerController>().GetSetssionId();
+                        var toId = sessionId;
 
-                        // var fromId = this.localZepetoPlayer.character.gameObject.GetComponent<PlayerController>().GetSetssionId();
-                        // var toId = sessionId;
+                        console.log(`fromId: ${fromId} ---> toId: ${toId}`);
 
-                        // console.log(`fromId: ${fromId} ---> toId: ${toId}`);
+                        this.SendLookAt(fromId, toId);
 
 
                     }));
@@ -141,6 +151,8 @@ export default class Starter extends ZepetoScriptBehaviour {
 
     private OnUpdatePlayer(sessionId: string, player: Player) {
 
+        console.log('OnUpdatePlayer');
+
         const position = this.ParseVector3(player.transform.position);
 
         const zepetoPlayer = ZepetoPlayers.instance.GetPlayer(sessionId);
@@ -165,6 +177,13 @@ export default class Starter extends ZepetoScriptBehaviour {
         rot.Add("z", transform.localEulerAngles.z);
         data.Add("rotation", rot.GetObject());
         this.room.Send("onChangedTransform", data.GetObject());
+    }
+
+    private SendLookAt(fromId:string, toId:string){
+        const data = new RoomData();
+        data.Add("fromId", fromId);
+        data.Add("toId", toId);
+        this.room.Send("onLookAtTarget", data.GetObject());
     }
 
     private SendState(state: CharacterState) {
