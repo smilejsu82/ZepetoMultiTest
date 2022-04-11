@@ -77,9 +77,7 @@ export default class Starter extends ZepetoScriptBehaviour {
 
                 playerController.findTargetAction = (fromId, toId)=>{
 
-                    ZepetoPlayers.instance.GetPlayer(fromId).character.transform.LookAt(
-                        ZepetoPlayers.instance.GetPlayer(toId).character.transform
-                    );
+                    ZepetoPlayers.instance.GetPlayer(fromId).character.gameObject.GetComponent<PlayerController>().SetTarget(toId);
 
                 };
 
@@ -101,9 +99,11 @@ export default class Starter extends ZepetoScriptBehaviour {
                     playerController.findTargetAction = (fromId, toId)=>{
 
 
-                        ZepetoPlayers.instance.GetPlayer(fromId).character.transform.LookAt(
-                            ZepetoPlayers.instance.GetPlayer(toId).character.transform
-                        );
+                        ZepetoPlayers.instance.GetPlayer(fromId).character.gameObject.GetComponent<PlayerController>().SetTarget(toId);
+
+                        // ZepetoPlayers.instance.GetPlayer(fromId).character.transform.LookAt(
+                        //     ZepetoPlayers.instance.GetPlayer(toId).character.transform
+                        // );
                     };
 
                     // [RoomState] player 인스턴스의 state가 갱신될 때마다 호출됩니다.

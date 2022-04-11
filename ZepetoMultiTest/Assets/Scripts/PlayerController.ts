@@ -57,9 +57,9 @@ export default class PlayerController extends ZepetoScriptBehaviour {
     }
 
     LateUpdate(){
-        // if(this.targetGo){
-        //     this.transform.LookAt(this.targetGo.transform);
-        // }
+        if(this.targetGo){
+            this.transform.LookAt(this.targetGo.transform);
+        }
     }
 
 }
