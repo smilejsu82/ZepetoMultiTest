@@ -6,6 +6,7 @@ import {CharacterState, SpawnInfo, ZepetoPlayers, ZepetoPlayer} from 'ZEPETO.Cha
 import * as UnityEngine from "UnityEngine";
 import PlayerController from './PlayerController'
 import res_OnLookAtTarget from './res_OnLookAtTarget'
+import {Gizmos, Color} from 'UnityEngine'
 
 export default class Starter extends ZepetoScriptBehaviour {
 
