@@ -34,15 +34,10 @@ export default class extends Sandbox {
         });
 
         this.onMessage("onLookAtTarget", (client, message) => {
-            //const player = this.state.players.get(client.sessionId);
-            //player.state = message.state;
-            var res = {
-                sessionId : client.sessionId,
-                fromId : message.fromId,
-                toId : message.toId
-            };
-
-            this.broadcast('onLookAtTarget', res);
+            
+            const player = this.state.players.get(client.sessionId);
+            player.fromHash = message.fromHash;
+            player.toHash = message.toHash;
             
         });
 
@@ -93,6 +88,7 @@ export default class extends Sandbox {
 
     async onLeave(client: SandboxPlayer, consented?: boolean) {
 
+        console.log(`[onLeave] - client: ${client.sessionId}`);
         // allowReconnection 설정을 통해 순단에 대한 connection 유지 처리등을 할 수 있으나 기본 가이드에서는 즉시 정리.
         // delete 된 player 객체에 대한 정보를 클라이언트에서는 players 객체에 add_OnRemove 이벤트를 추가하여 확인 할 수 있음.
         this.state.players.delete(client.sessionId);

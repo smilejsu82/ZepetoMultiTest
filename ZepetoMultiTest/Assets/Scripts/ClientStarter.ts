@@ -14,24 +14,12 @@ export default class Starter extends ZepetoScriptBehaviour {
 
     private room: Room;
     private currentPlayers: Map<string, Player> = new Map<string, Player>();
+    private players: Map<string, PlayerController> = new Map<string, PlayerController>();
 
     private Start() {
 
         this.multiplay.RoomCreated += (room: Room) => {
             this.room = room;
-            
-            this.room.AddMessageHandler('onLookAtTarget', (message)=>{
-
-                var res = message as res_OnLookAtTarget;
-
-                var fromId : string = res.fromId;
-                var toId : string = res.toId;
-
-                console.log(fromId, toId);
-
-            });
-
-
         };
 
         this.multiplay.RoomJoined += (room: Room) => {
@@ -74,17 +62,27 @@ export default class Starter extends ZepetoScriptBehaviour {
                 this.localZepetoPlayer = ZepetoPlayers.instance.LocalPlayer.zepetoPlayer;
 
                 var playerController = this.localZepetoPlayer.character.gameObject.AddComponent<PlayerController>();
-                playerController.Init(this.room.SessionId, this.room);
+                const player: Player = this.currentPlayers.get(this.room.SessionId);
 
-                playerController.findTargetAction = (fromId, toId)=>{
+                playerController.Init(this.room.SessionId, player.zepetoHash, this.room, this.localZepetoPlayer);
 
-                    ZepetoPlayers.instance.GetPlayer(fromId).character.gameObject.GetComponent<PlayerController>().SetTarget(toId);
+                playerController.findTargetAction = (fromHash, toHash)=>{
+
+                    
+                    var playerController1 = this.players.get(fromHash);
+                    var playerController2 = this.players.get(toHash);
+                    playerController1.SetTarget(playerController2.gameObject);
+
+                    this.SendLookAt(fromHash, toHash);
+                    
 
                 };
 
                 this.localZepetoPlayer.character.OnChangedState.AddListener((cur, prev) => {
                     this.SendState(cur);
                 });
+
+                this.players.set(player.zepetoHash, playerController);
             });
 
             // [CharacterController] Player 인스턴스가 Scene에 완전히 로드되었을 때 호출
@@ -95,20 +93,12 @@ export default class Starter extends ZepetoScriptBehaviour {
                     
                     var zepetoPlayer = ZepetoPlayers.instance.GetPlayer(sessionId);
                     var playerController = zepetoPlayer.character.gameObject.AddComponent<PlayerController>();
-                    playerController.Init(sessionId, null);
-
-                    playerController.findTargetAction = (fromId, toId)=>{
-
-
-                        ZepetoPlayers.instance.GetPlayer(fromId).character.gameObject.GetComponent<PlayerController>().SetTarget(toId);
-
-                        // ZepetoPlayers.instance.GetPlayer(fromId).character.transform.LookAt(
-                        //     ZepetoPlayers.instance.GetPlayer(toId).character.transform
-                        // );
-                    };
+                    playerController.Init(sessionId, player.zepetoHash, null, zepetoPlayer);
 
                     // [RoomState] player 인스턴스의 state가 갱신될 때마다 호출됩니다.
                     player.OnChange += (changeValues) => this.OnUpdatePlayer(sessionId, player);
+
+                    this.players.set(player.zepetoHash, playerController);
                 }
             });
         }
@@ -163,12 +153,20 @@ export default class Starter extends ZepetoScriptBehaviour {
 
     private OnUpdatePlayer(sessionId: string, player: Player) {
 
-        console.log('OnUpdatePlayer');
+        console.log(`[OnUpdatePlayer] fromId: ${player.fromHash}, toId: ${player.toHash}`);
 
         const position = this.ParseVector3(player.transform.position);
 
         const zepetoPlayer = ZepetoPlayers.instance.GetPlayer(sessionId);
         zepetoPlayer.character.MoveToPosition(position);
+
+        if(player.fromHash && player.toHash){
+            var playerController1 = this.players.get(player.fromHash);
+            var playerController2 = this.players.get(player.toHash);
+        
+            playerController1.SetTarget(playerController2.gameObject);
+                //ZepetoPlayers.instance.GetPlayer(player.fromId).character.gameObject.GetComponent<PlayerController>().SetTarget(player.toId);
+        }
 
         if (player.state === CharacterState.JumpIdle || player.state === CharacterState.JumpMove)
             zepetoPlayer.character.Jump();
@@ -191,10 +189,10 @@ export default class Starter extends ZepetoScriptBehaviour {
         this.room.Send("onChangedTransform", data.GetObject());
     }
 
-    private SendLookAt(fromId:string, toId:string){
+    private SendLookAt(fromHash:string, toHash:string){
         const data = new RoomData();
-        data.Add("fromId", fromId);
-        data.Add("toId", toId);
+        data.Add("fromHash", fromHash);
+        data.Add("toHash", toHash);
         this.room.Send("onLookAtTarget", data.GetObject());
     }
 

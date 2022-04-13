@@ -2,5 +2,5 @@
 "State" : {"players" : {"map" : "Player"}},
 "Vector3" : {"x" : "number","y" : "number","z" : "number"},
 "Transform" : {"position" : "Vector3","rotation" : "Vector3"},
-"Player" : {"sessionId" : "string","zepetoHash" : "string","zepetoUserId" : "string","transform" : "Transform","state" : "number"}
+"Player" : {"sessionId" : "string","zepetoHash" : "string","zepetoUserId" : "string","transform" : "Transform","state" : "number","fromHash" : "string","toHash" : "string"}
 }

@@ -21,5 +21,7 @@ declare module "ZEPETO.Multiplay.Schema" {
 		zepetoUserId: string;
 		transform: Transform;
 		state: number;
+		fromHash: string;
+		toHash: string;
 	}
 }
