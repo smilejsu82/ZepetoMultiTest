@@ -1,6 +1,6 @@
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { Room, RoomData } from 'ZEPETO.Multiplay'
-import { CharacterController, GameObject, Physics, Vector3, LayerMask } from 'UnityEngine';
+import { CharacterController, GameObject, Physics, Vector3, Object, LayerMask, Resources } from 'UnityEngine';
 import { CharacterState, ZepetoPlayer, ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import { Action$2 } from 'System'
 
@@ -19,8 +19,16 @@ export default class PlayerController extends ZepetoScriptBehaviour {
     public findTargetAction: Action$2<string, string>;
     private zepetoPlayer : ZepetoPlayer;
 
+    private drawGizmoGo : GameObject;
+
+    Awake(){
+        var prefab = Resources.Load("DrawGizmo") as GameObject;
+        this.drawGizmoGo = Object.Instantiate(prefab, this.transform) as GameObject;
+    }
 
     public Init(sessionId: string, hash: string, room: Room, zepetoPlayer : ZepetoPlayer) {
+
+        
 
         this.sessionId = sessionId;
         this.room = room;
